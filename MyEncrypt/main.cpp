@@ -1,0 +1,35 @@
+#include <cstdio>
+#include "MyCrypt.h"
+
+int main()
+{
+	BYTE Ree[10000] = { 0 };
+	BYTE Out[10000] = { 0 };
+	BYTE Key[32] = {
+		0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+		0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F,
+		0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+		0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F
+	};
+
+	for (int i = 0; i < sizeof(Ree); i++)
+	{
+		Ree[i] = i;
+	}
+
+	MyCrypt c = MyCrypt(Key, sizeof(Key));
+	c.Encrypt(Ree, sizeof(Ree));
+	c.Decrypt(Out, sizeof(Out));
+
+
+	for (int i = 0; i < sizeof(Ree); i++)
+	{
+		if (Ree[i] != Out[i])
+		{
+			puts("oof");
+			return 1;
+		}
+	}
+
+	puts("Yay!");
+}
